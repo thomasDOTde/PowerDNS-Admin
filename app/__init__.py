@@ -3,14 +3,28 @@ from flask import Flask, request, session, redirect, url_for
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 
+
+class PrefixMiddleware(object):
+    def __init__(self, app, prefix=''):
+        self.app = app
+        self.prefix = prefix
+    def __call__(self, environ, start_response):
+        if environ['PATH_INFO'].startswith(self.prefix):
+            environ['PATH_INFO'] = environ['PATH_INFO'][len(self.prefix):]
+            environ['SCRIPT_NAME'] = self.prefix
+            return self.app(environ, start_response)
+        else:
+            start_response('404', [('Content-Type', 'text/plain')])
+            return ["This url does not belong to the app.".encode()]
+
 app = Flask(__name__)
 app.config.from_object('config')
-app.wsgi_app = ProxyFix(app.wsgi_app)
+
+app.wsgi_app = PrefixMiddleware(app.wsgi_app, prefix=app.config['APPLICATION_PREFIX'])
 
 login_manager = LoginManager()
 login_manager.init_app(app)
 db = SQLAlchemy(app)
-
 def enable_github_oauth(GITHUB_ENABLE):
     if not GITHUB_ENABLE:
         return None, None

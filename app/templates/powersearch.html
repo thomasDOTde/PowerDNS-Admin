@@ -1,0 +1,213 @@
+    <div class="row">
+    	<div class="col-xs-12">
+                  <div class="box">
+                    <div class="box-header">
+                    	<h3 class="box-title">Power Search</h3>
+                    </div>
+
+                    <div class="box-body">
+		    <table id="pwrsearch"><tr>
+					<td><input class="form-control input-sm" id="ps_searcher" type="text" 
+						placeholder="Subdomain, domain, IP or zone..." maxlength="64"/></td>
+		    <td><button type="button" id="ps_searcher_btn" class="btn btn-flat btn-primary history-info-button">
+				Search&nbsp;<i class="fa fa-search"></i></button></td>
+		    </tr></table>
+                    </div>
+                  </div>
+        </div>
+	</div>
+	<style>
+		#ps_searcher {
+				min-width: 350px;
+		}
+
+		#ps_searcher_btn {
+				line-height: 1.28;
+		}
+
+		#ps_answer {
+				margin-top: 1%;
+		}
+		
+		#ps_loader {
+ 				border: 5px solid #f3f3f3; /* Light grey */
+    				border-top: 5px solid #3c8dbc; /* Blue */
+    				border-radius: 50%;
+    				width: 50px;
+    				height: 50px;
+    				animation: spin 0.5s linear infinite;
+    				margin-top: 1%;
+				margin-left: 10%;
+		}
+
+		@keyframes spin {
+    				0% { transform: rotate(0deg); }
+    				100% { transform: rotate(360deg); }
+		}
+	</style>
+	<script src="{{ url_for('static', filename='adminlte2/plugins/jQuery/jQuery-2.2.0.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='adminlte2/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='adminlte2/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
+	<script>
+		let searchfield = $("#ps_searcher");
+		let url = window.location.href;
+		let url_parts = url.split("/");
+		let ps_addr = url_parts[0] + "//" + url_parts[2] + "/powersearch";
+		let zone_addr = url_parts[0] + "//" + url_parts[2] + "/domain";
+		let ps_table_header = `<table id="ps_results" class="table table-bordered table-striped no-footer">
+                			<thead><tr>
+                        			<th>Name</th>
+                        			<th>Type</th>
+                        			<th>Status</th>
+                        			<th>TTL</th>
+									<th>Master</th>
+                        			<th>Data</th>
+						<th>Action</th>
+                        		</thead><tbody>`;
+		{% if current_user.role.name !='Administrator' %}
+		let ps_table_data = `<tr>
+                                    	<td>
+					    <strong><a href="{5}">{0}</a></strong>
+					</td>
+					<td>{1}</td>
+					<td>{2}</td>
+					<td>{3}</td>
+					<td>{7}</td>
+					<td class="length-break">{4}</td>
+					<td width="10%">
+						<button type="button" class="btn btn-flat btn-success" 
+							onclick="window.location.href='/domain/{6}'">Manage
+							<i class="fa fa-cog"></i></button>
+					</td>`;
+		{% else %}
+		let ps_table_data = `<tr>
+                                    	<td>
+					    <strong><a href="{5}">{0}</a></strong>
+					</td>
+					<td>{1}</td>
+					<td>{2}</td>
+					<td>{3}</td>
+					<td>{7}</td>
+					<td class="length-break">{4}</td>
+					<td width="20%">
+						<button type="button" class="btn btn-flat btn-success" 
+							onclick="window.location.href='/domain/{6}'">Manage
+							<i class="fa fa-cog"></i></button>
+						<button type="button" class="btn btn-flat btn-danger" 
+							onclick="window.location.href='/admin/domain/{6}/manage'">Admin
+							<i class="fa fa-cog"></i></button>
+					</td>`;
+		{% endif %}
+
+		let ps_table_footer = `</tr></tbody></table></div></div></div></div>`;
+
+		searchfield.focus();
+		searchfield.val('');
+
+		String.prototype.format = function () {
+        		let args = [].slice.call(arguments);
+        		return this.replace(/(\{\d+\})/g, function (a){
+            		return args[+(a.substr(1,a.length-2))||0];
+        		});
+		};
+
+		async function powersearch() {
+			searchfield.prop('disabled', true);
+			$("#ps_searcher_btn").prop('disabled', true)
+            if (searchfield.val() === '' || searchfield.val().trim().length === 0) {
+				// if the search field only contains only spaces, clear it
+            	$("#ps_answer").remove();
+				searchfield.prop('disabled', false);
+				$("#ps_searcher_btn").prop('disabled', false);
+				searchfield.val('');
+				searchfield.focus();
+            } else {
+				$('<div id="ps_loader"></div>').insertAfter("#pwrsearch");
+				$("#ps_answer").remove();
+
+				let request = new Request(ps_addr, {
+					headers: new Headers({
+						'Content-Type': 'application/json'
+					}),
+					body: JSON.stringify({
+						'term': searchfield.val()
+					}),
+					method: 'POST',
+					redirect: 'follow',
+					credentials: 'same-origin'
+				});
+
+				try {
+					let response = await fetch(request);
+					
+					if (response.ok) {
+						response = await response.json();
+
+						$("#ps_loader").remove();
+
+						if (response == null) {
+							$('<p id="ps_answer"><i class="fa fa-exclamation-triangle"></i> Search term is invalid.</p>')
+							.insertAfter("#pwrsearch").hide().show('fast');
+						} else if (response.length !== 0) {
+						let ps_table = ps_table_header;
+						
+						response.forEach(function(message) {
+							if (message['disabled'] === 0) {
+								message['disabled'] = 'Active';
+							} else { 
+								message['disabled'] = 'Disabled';
+							};
+							ps_table = ps_table + ps_table_data.format(message['name'], 
+							message['type'], message['disabled'], message['ttl'], 
+							message['content'], zone_addr + "/" + message['zone'], 
+							message['zone'], message['master']);
+						});
+						
+						ps_table = ps_table + ps_table_footer;
+						$('<div id="ps_answer"><p><i class="fa fa-info-circle"></i> Only up to first 100 results are shown.</p>' + 
+						ps_table + '</div>').insertAfter("#pwrsearch").hide().show('fast');
+						
+						$("#ps_results").DataTable({
+        						"paging" : true,
+        						"lengthChange" : true,
+        						"searching" : false,
+        						"ordering" : true,
+        						"info" : true,
+        						"autoWidth" : false,
+        						"pageLength": 10,
+        						"language": {
+        						    "lengthMenu": " _MENU_ records"
+        						},
+        						"orderFixed": [[1, 'asc']]
+    					});
+													
+						} else {
+                    	    $('<p id="ps_answer"><i class="fa fa-info-circle"></i> No data for the given term.</p>')
+							.insertAfter("#pwrsearch").hide().show('fast');
+                    	};
+						searchfield.prop('disabled', false);
+						$("#ps_searcher_btn").prop('disabled', false);
+                    } else {
+						throw new Error("Unable to send request to PowerDNS-Admin.");
+					};					
+				} catch(error) {
+					searchfield.prop('disabled', false);
+					$("#ps_searcher_btn").prop('disabled', false);
+					$("#ps_loader").remove();
+					$('<p id="ps_answer"><i class="fa fa-exclamation-triangle"></i> Error communicating with the server: ' + 
+					error.message + '</p>').insertAfter("#pwrsearch").hide().show('fast');
+				};
+
+			};
+		};
+
+		searchfield.keypress(function(key) {
+    			if (key.which === 13) {
+					powersearch();
+				};
+		});
+
+		$("#ps_searcher_btn").click(function() {
+			powersearch();
+		});
+	</script>

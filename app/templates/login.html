@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>DNS Control Panel - Log In</title>
+  <title>DNS Control Panel - {{ _('Log In') }}</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
@@ -27,7 +27,9 @@
 <body class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
-    <a href="{{ url_for('index') }}">Sign In {{ login_title }}</a>
+{% autoescape false %}
+    <a href="{{ url_for('index') }}">{{ _('Sign In %(log_ttle)s', log_ttle=login_title) }}</a>
+{% endautoescape %}
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
@@ -87,13 +89,13 @@
         <div class="col-xs-8">
           <div class="checkbox icheck">
             <label>
-              <input type="checkbox"> Remember Me
+              <input type="checkbox"> {{ _('Remember Me') }}
             </label>
           </div>
         </div>
         <!-- /.col -->
         <div class="col-xs-4">
-          <button type="submit" class="btn btn-flat btn-primary btn-block">Sign In</button>
+          <button type="submit" class="btn btn-flat btn-primary btn-block">{{ _('Sign In') }}</button>
         </div>
         <!-- /.col -->
       </div>
@@ -103,7 +105,7 @@
     {% endif %}
     <br>
     {% if signup_enabled %}
-    <a href="{{ url_for('register') }}" class="text-center">Create an account </a>
+    <a href="{{ url_for('register') }}" class="text-center">{{ _('Create an account') }}</a>
     {% endif %}
   </div>
   <!-- /.login-box-body -->

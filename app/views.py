@@ -17,14 +17,18 @@ from werkzeug import secure_filename
 from werkzeug.security import gen_salt
 
 from .models import User, Domain, Record, Server, History, Anonymous, Setting, DomainSetting
-from app import app, login_manager, github
+from app import app, login_manager, github, babel
 from lib import utils
+from config import LANGUAGES
 
 
 jinja2.filters.FILTERS['display_record_name'] = utils.display_record_name
 jinja2.filters.FILTERS['display_master_name'] = utils.display_master_name
 jinja2.filters.FILTERS['display_second_to_time'] = utils.display_time
 jinja2.filters.FILTERS['email_to_gravatar_url'] = utils.email_to_gravatar_url
+app.jinja_env.filters['display_second_to_time'] = utils.display_time
+app.jinja_env.filters['display_master_name'] = utils.display_master_name
+app.jinja_env.filters['email_to_gravatar_url'] = utils.email_to_gravatar_url
 
 # Flag for pdns v4.x.x
 # TODO: Find another way to do this
@@ -33,6 +37,10 @@ if StrictVersion(PDNS_VERSION) >= StrictVersion('4.0.0'):
     NEW_SCHEMA = True
 else:
     NEW_SCHEMA = False
+
+@babel.localeselector
+def get_locale():
+    return request.accept_languages.best_match(LANGUAGES.keys())
 
 @app.context_processor
 def inject_fullscreen_layout_setting():

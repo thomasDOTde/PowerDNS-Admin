@@ -32,7 +32,7 @@
                       <div class="small-box bg-aqua">
                         <div class="inner">
                           <h3>{{ domain_count }}</h3>
-                          <p>{% if domain_count > 1 %}Domains{% else %}Domain{% endif %}</p>
+                          <p>{% if domain_count > 1 %}{{_('Domains')}}{% else %}{{_('Domain')}}{% endif %}</p>
                         </div>
                         <div class="icon">
                           <i class="fa fa-book"></i>
@@ -71,7 +71,9 @@
                       <a href="{{ url_for('admin') }}">
                       <div class="small-box bg-green">
                         <div class="inner">
+{% autoescape false %}
                           <h3><span style="font-size: 18px">{{ uptime|display_second_to_time }}</span></h3>
+{% endautoescape %}
                           <p>Uptime</p>
                         </div>
                         <div class="icon">

@@ -2,10 +2,12 @@ from werkzeug.contrib.fixers import ProxyFix
 from flask import Flask, request, session, redirect, url_for
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
+from flask_babel import Babel, gettext
 
 app = Flask(__name__)
 app.config.from_object('config')
 app.wsgi_app = ProxyFix(app.wsgi_app)
+babel = Babel(app)
 
 login_manager = LoginManager()
 login_manager.init_app(app)

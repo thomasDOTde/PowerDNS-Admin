@@ -1,0 +1,52 @@
+# Portuguese (Brazil) translations for PROJECT.
+# Copyright (C) 2018 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2018.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2018-01-16 21:05+0000\n"
+"PO-Revision-Date: 2018-01-16 20:01+0000\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: pt_BR\n"
+"Language-Team: pt_BR <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.5.3\n"
+
+#: app/templates/dashboard.html:35
+msgid "Domains"
+msgstr "Dom&iacute;nios"
+
+#: app/templates/dashboard.html:35
+msgid "Domain"
+msgstr "Dom&iacute;nio"
+
+#: app/templates/login.html:6
+msgid "Log In"
+msgstr "Acessar"
+
+#: app/templates/login.html:31
+#, python-format
+msgid "Sign In %(log_ttle)s"
+msgstr "Acessar %(log_ttle)s"
+
+#: app/templates/login.html:92
+msgid "Remember Me"
+msgstr "Lembrar-me"
+
+#: app/templates/login.html:98
+msgid "Sign In"
+msgstr "Acessar"
+
+#: app/templates/login.html:108
+msgid "Create an account"
+msgstr "Criar conta"
+
+#~ msgid "Sign In %(login_title)"
+#~ msgstr "Acessar %(login_title)"
+

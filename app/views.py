@@ -26,6 +26,7 @@ jinja2.filters.FILTERS['display_record_name'] = utils.display_record_name
 jinja2.filters.FILTERS['display_master_name'] = utils.display_master_name
 jinja2.filters.FILTERS['display_second_to_time'] = utils.display_time
 jinja2.filters.FILTERS['email_to_gravatar_url'] = utils.email_to_gravatar_url
+app.jinja_env.filters['display_record_name'] = utils.display_record_name
 app.jinja_env.filters['display_second_to_time'] = utils.display_time
 app.jinja_env.filters['display_master_name'] = utils.display_master_name
 app.jinja_env.filters['email_to_gravatar_url'] = utils.email_to_gravatar_url

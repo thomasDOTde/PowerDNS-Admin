@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2018-01-16 21:52+0000\n"
+"POT-Creation-Date: 2018-01-16 21:59+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,6 +25,47 @@ msgstr ""
 msgid "Value"
 msgstr ""
 
+#: app/templates/base.html:90
+msgid "My Profile"
+msgstr ""
+
+#: app/templates/base.html:93
+msgid "Log out"
+msgstr ""
+
+#: app/templates/base.html:119
+msgid "Logged In"
+msgstr ""
+
+#: app/templates/base.html:127
+msgid "New Domain"
+msgstr ""
+
+#: app/templates/base.html:130 app/templates/dashboard.html:47
+msgid "Users"
+msgstr ""
+
+#: app/templates/base.html:131
+msgid "History"
+msgstr ""
+
+#: app/templates/base.html:132
+msgid "Settings"
+msgstr ""
+
+#: app/templates/base.html:211
+msgid "Error"
+msgstr ""
+
+#: app/templates/base.html:218 app/templates/base.html:241
+#: app/templates/dashboard.html:265 app/templates/dashboard.html:288
+msgid "Close"
+msgstr ""
+
+#: app/templates/base.html:234
+msgid "Success"
+msgstr ""
+
 #: app/templates/dashboard.html:26
 msgid "Statistics"
 msgstr ""
@@ -36,10 +77,6 @@ msgstr ""
 #: app/templates/dashboard.html:35 app/templates/dashboard.html:144
 #: app/templates/domain.html:12
 msgid "Domain"
-msgstr ""
-
-#: app/templates/dashboard.html:47
-msgid "Users"
 msgstr ""
 
 #: app/templates/dashboard.html:47
@@ -84,10 +121,6 @@ msgstr ""
 
 #: app/templates/dashboard.html:165
 msgid "Disabled"
-msgstr ""
-
-#: app/templates/dashboard.html:265 app/templates/dashboard.html:288
-msgid "Close"
 msgstr ""
 
 #: app/templates/domain.html:44

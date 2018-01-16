@@ -87,10 +87,10 @@
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="{{ url_for('user_profile') }}" class="btn btn-flat btn-default">My Profile</a>
+                  <a href="{{ url_for('user_profile') }}" class="btn btn-flat btn-default">{{_('My Profile')}}</a>
                 </div>
                 <div class="pull-right">
-                  <a href="{{ url_for('logout') }}" class="btn btn-flat btn-default">Log out</a>
+                  <a href="{{ url_for('logout') }}" class="btn btn-flat btn-default">{{_('Log out')}}</a>
                 </div>
               </li>
             </ul>
@@ -116,7 +116,7 @@
         </div>
         <div class="pull-left info">
           <p>{{ current_user.firstname }} {{ current_user.lastname }}</p>
-          <a href="#"><i class="fa fa-circle text-success"></i> Logged In</a>
+          <a href="#"><i class="fa fa-circle text-success"></i>{{ _('Logged In')}}</a>
         </div>
       </div>
       <!-- sidebar menu: : style can be found in sidebar.less -->
@@ -124,12 +124,12 @@
         <li class="header">USER ACTIONS</li>
         <li><a href="{{ url_for('dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
         {% if current_user.role.name == 'Administrator' %}
-        <li><a href="{{ url_for('domain_add') }}"><i class="fa fa-plus"></i> <span>New Domain</span></a></li>
+        <li><a href="{{ url_for('domain_add') }}"><i class="fa fa-plus"></i> <span>{{_('New Domain')}}</span></a></li>
         <li class="header">ADMINISTRATION</li>
         <li><a href="{{ url_for('admin') }}"><i class="fa fa-wrench"></i> <span>Admin Console</span></a></li>
-        <li><a href="{{ url_for('admin_manageuser') }}"><i class="fa fa-users"></i> <span>Users</span></a></li>
-        <li><a href="{{ url_for('admin_history') }}"><i class="fa fa-calendar"></i> <span>History</span></a></li>
-        <li><a href="{{ url_for('admin_settings') }}"><i class="fa fa-cog"></i> <span>Settings</span></a></li>
+        <li><a href="{{ url_for('admin_manageuser') }}"><i class="fa fa-users"></i> <span>{{_('Users')}}</span></a></li>
+        <li><a href="{{ url_for('admin_history') }}"><i class="fa fa-calendar"></i> <span>{{_('History')}}an></a></li>
+        <li><a href="{{ url_for('admin_settings') }}"><i class="fa fa-cog"></i> <span>{{_('Settings')}}</span></a></li>
         {% endif %}
     {% endif %}
     </section>
@@ -208,14 +208,14 @@
           aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-        <h4 class="modal-title">Error</h4>
+        <h4 class="modal-title">{{_('Error')}}</h4>
       </div>
       <div class="modal-body">
         <p></p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-flat btn-default pull-right"
-          data-dismiss="modal">Close</button>
+          data-dismiss="modal">{{_('Close')}}</button>
       </div>
     </div>
     <!-- /.modal-content -->
@@ -231,14 +231,14 @@
           aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-        <h4 class="modal-title">Success</h4>
+        <h4 class="modal-title">{{_('Success')}}</h4>
       </div>
       <div class="modal-body">
         <p></p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-flat btn-default pull-right"
-          data-dismiss="modal">Close</button>
+          data-dismiss="modal">{{_('Close')}}</button>
       </div>
     </div>
     <!-- /.modal-content -->

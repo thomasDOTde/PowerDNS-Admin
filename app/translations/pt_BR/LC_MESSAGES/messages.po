@@ -48,7 +48,7 @@ msgstr "Usu&aacute;rios"
 
 #: app/templates/base.html:131
 msgid "History"
-msgstr "Histor&iacute;co"
+msgstr "Hist&oacute;rico"
 
 #: app/templates/base.html:132
 msgid "Settings"

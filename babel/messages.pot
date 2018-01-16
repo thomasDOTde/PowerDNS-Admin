@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2018-01-16 21:37+0000\n"
+"POT-Creation-Date: 2018-01-16 21:52+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,6 +25,10 @@ msgstr ""
 msgid "Value"
 msgstr ""
 
+#: app/templates/dashboard.html:26
+msgid "Statistics"
+msgstr ""
+
 #: app/templates/dashboard.html:35
 msgid "Domains"
 msgstr ""
@@ -32,6 +36,18 @@ msgstr ""
 #: app/templates/dashboard.html:35 app/templates/dashboard.html:144
 #: app/templates/domain.html:12
 msgid "Domain"
+msgstr ""
+
+#: app/templates/dashboard.html:47
+msgid "Users"
+msgstr ""
+
+#: app/templates/dashboard.html:47
+msgid "User"
+msgstr ""
+
+#: app/templates/dashboard.html:77
+msgid "Uptime"
 msgstr ""
 
 #: app/templates/dashboard.html:98

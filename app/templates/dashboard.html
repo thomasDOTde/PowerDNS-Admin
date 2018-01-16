@@ -23,7 +23,7 @@
         <div class="col-xs-3">
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">Statistics</h3>
+                    <h3 class="box-title">{{_('Statistics')}}</h3>
                 </div>
                 <div class="box-body">
                   <div class="row">
@@ -44,7 +44,7 @@
                       <div class="small-box bg-green">
                         <div class="inner">
                           <h3>{{ users|length }}</h3>
-                          <p>{% if users|length > 1 %}Users{% else %}User{% endif %}</p>
+                          <p>{% if users|length > 1 %}{{_('Users')}}{% else %}{{_('User')}}{% endif %}</p>
                         </div>
                         <div class="icon">
                           <i class="fa fa-users"></i>
@@ -74,7 +74,7 @@
 {% autoescape false %}
                           <h3><span style="font-size: 18px">{{ uptime|display_second_to_time }}</span></h3>
 {% endautoescape %}
-                          <p>Uptime</p>
+                          <p>{{_('Uptime')}}</p>
                         </div>
                         <div class="icon">
                           <i class="fa fa-clock-o"></i>

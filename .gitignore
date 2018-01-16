@@ -28,3 +28,6 @@ db_repository/*
 upload/avatar/*
 tmp/*
 .ropeproject
+
+# translate
+*.mo

@@ -10,7 +10,6 @@ Flask-OAuthlib==0.9.3
 Flask-SQLAlchemy==2.1
 Flask-WTF==0.14.2
 oauthlib==2.0.6
-pkg-resources==0.0.0
 pyasn1==0.4.2
 pyotp==2.2.1
 python-ldap==2.4.21

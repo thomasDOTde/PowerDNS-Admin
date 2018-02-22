@@ -79,3 +79,9 @@ RECORDS_ALLOW_EDIT = ['A', 'AAAA', 'CNAME', 'SPF', 'PTR', 'MX', 'TXT']
 
 # EXPERIMENTAL FEATURES
 PRETTY_IPV6_PTR = False
+
+# LANGUAGE
+LANGUAGES = {
+    'en': 'English',
+    'pt_BR':'Portugues Brasil'
+}

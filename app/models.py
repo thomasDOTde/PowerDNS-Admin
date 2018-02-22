@@ -9,6 +9,7 @@ import traceback
 import pyotp
 import re
 import dns.reversename
+import sys
 
 from datetime import datetime
 from distutils.util import strtobool
@@ -26,6 +27,10 @@ if 'LDAP_TYPE' in app.config.keys():
     LDAP_PASSWORD = app.config['LDAP_PASSWORD']
     LDAP_SEARCH_BASE = app.config['LDAP_SEARCH_BASE']
     LDAP_TYPE = app.config['LDAP_TYPE']
+    LDAP_GROUP_SECURITY = app.config['LDAP_GROUP_SECURITY']
+    if LDAP_GROUP_SECURITY == True:
+        LDAP_ADMIN_GROUP = app.config['LDAP_ADMIN_GROUP']
+        LDAP_USER_GROUP = app.config['LDAP_USER_GROUP']
     LDAP_FILTER = app.config['LDAP_FILTER']
     LDAP_USERNAMEFIELD = app.config['LDAP_USERNAMEFIELD']
 else:
@@ -124,7 +129,9 @@ class User(db.Model):
 
     def check_password(self, hashed_password):
         # Check hased password. Useing bcrypt, the salt is saved into the hash itself
-        return bcrypt.checkpw(self.plain_text_password.encode('utf-8'), hashed_password.encode('utf-8'))
+        if (self.plain_text_password):
+            return bcrypt.checkpw(self.plain_text_password.encode('utf-8'), hashed_password.encode('utf-8'))
+        return False
 
     def get_user_info_by_id(self):
         user_info = User.query.get(int(self.id))
@@ -186,11 +193,13 @@ class User(db.Model):
                 logging.error('LDAP authentication is disabled')
                 return False
 
-            searchFilter = "(&(objectcategory=person)(samaccountname=%s))" % self.username
-            if LDAP_TYPE == 'ldap':
-              searchFilter = "(&(%s=%s)%s)" % (LDAP_USERNAMEFIELD, self.username, LDAP_FILTER)
-              logging.info('Ldap searchFilter "%s"' % searchFilter)
+            if LDAP_TYPE == 'ad':
+                searchFilter = "(&(objectcategory=person)(%s=%s)(%s))" % (LDAP_USERNAMEFIELD, self.username, LDAP_FILTER)
 
+            elif LDAP_TYPE == 'ldap':
+                searchFilter = "(&(%s=%s)(%s))" % (LDAP_USERNAMEFIELD, self.username, LDAP_FILTER)
+
+            logging.info('Ldap searchFilter "%s"' % searchFilter)
             result = self.ldap_search(searchFilter, LDAP_SEARCH_BASE)
             if not result:
                 logging.warning('User "%s" does not exist' % self.username)
@@ -216,27 +225,76 @@ class User(db.Model):
             # create user if not exist in the db
             if not User.query.filter(User.username == self.username).first():
                 try:
-                    # try to get user's firstname & lastname from LDAP
-                    # this might be changed in the future
-                    self.firstname = result[0][0][1]['givenName'][0]
-                    self.lastname = result[0][0][1]['sn'][0]
-                    self.email = result[0][0][1]['mail'][0]
-                except Exception:
-                    self.firstname = self.username
-                    self.lastname = ''
+                    ldap_username = result[0][0][0]
+                    l.simple_bind_s(ldap_username, self.password)
+                    if LDAP_GROUP_SECURITY:
+                        try:
+                            if LDAP_TYPE == 'ldap':
+                                uid = result[0][0][1]['uid'][0]
+                                groupSearchFilter =  "(&(objectClass=posixGroup)(memberUid=%s))" % uid
+                            else:
+                                groupSearchFilter =  "(&(objectcategory=group)(member=%s))" % ldap_username
+                            groups = self.ldap_search(groupSearchFilter, LDAP_SEARCH_BASE)
+                            allowedlogin = False
+                            isadmin = False
+                            for group in groups:
+                                logging.debug(group)
+                                if (group[0][0] == LDAP_ADMIN_GROUP):
+                                    allowedlogin = True
+                                    isadmin = True
+                                    logging.info('User %s is part of the "%s" group that allows admin access to PowerDNS-Admin' % (self.username,LDAP_ADMIN_GROUP))
+                                if (group[0][0] == LDAP_USER_GROUP):
+                                    allowedlogin = True
+                                    logging.info('User %s is part of the "%s" group that allows user access to PowerDNS-Admin' % (self.username,LDAP_USER_GROUP))
+                            if allowedlogin == False:
+                                logging.error('User %s is not part of the "%s" or "%s" groups that allow access to PowerDNS-Admin' % (self.username,LDAP_ADMIN_GROUP,LDAP_USER_GROUP))
+                                return False
+                        except:
+                            logging.error('LDAP group lookup for user "%s" has failed' % self.username)
+                    logging.info('User "%s" logged in successfully' % self.username)
 
-                # first register user will be in Administrator role
-                self.role_id = Role.query.filter_by(name='User').first().id
-                if User.query.count() == 0:
-                    self.role_id = Role.query.filter_by(name='Administrator').first().id
+                    # create user if not exist in the db
+                    if User.query.filter(User.username == self.username).first() == None:
+                        try:
+                            # try to get user's firstname & lastname from LDAP
+                            # this might be changed in the future
+                            self.firstname = result[0][0][1]['givenName'][0]
+                            self.lastname = result[0][0][1]['sn'][0]
+                            self.email = result[0][0][1]['mail'][0]
 
-                self.create_user()
-                logging.info('Created user "%s" in the DB' % self.username)
+                            if sys.version_info < (3,):
+                              if isinstance(self.firstname, str):
+                                  self.firstname = self.firstname.decode('utf-8')
+                              if isinstance(self.lastname, str):
+                                  self.lastname = self.lastname.decode('utf-8')
+                        except:
+                            self.firstname = self.username
+                            self.lastname = ''
 
-            return True
+                        # first registered user will be in Administrator role or if part of LDAP Admin group
+                        if (User.query.count() == 0):
+                            self.role_id = Role.query.filter_by(name='Administrator').first().id
+                        else:
+                            self.role_id = Role.query.filter_by(name='User').first().id
 
-        logging.error('Unsupported authentication method')
-        return False
+                        #
+                        if LDAP_GROUP_SECURITY:
+                            if isadmin == True:
+                                self.role_id = Role.query.filter_by(name='Administrator').first().id
+
+                        self.create_user()
+                        logging.info('Created user "%s" in the DB' % self.username)
+                    else:
+                        # user already exists in database, set their admin status based on group membership (if enabled)
+                        if LDAP_GROUP_SECURITY:
+                            self.set_admin(isadmin)
+                    return True
+                except:
+                    logging.error('User "%s" input a wrong password' % self.username)
+                    return False
+        else:
+            logging.error('Unsupported authentication method')
+            return False
 
     def create_user(self):
         """
@@ -313,6 +371,15 @@ class User(db.Model):
         for q in query:
             user_domains.append(q[2])
         return user_domains
+
+    def can_access_domain(self, domain_name):
+        if self.role.name == "Administrator":
+            return True
+
+        query = db.session.query(User, DomainUser, Domain).filter(User.id == self.id).filter(
+            User.id == DomainUser.user_id).filter(Domain.id == DomainUser.domain_id).filter(
+            Domain.name == domain_name)
+        return query.count() >= 1
 
     def delete(self):
         """

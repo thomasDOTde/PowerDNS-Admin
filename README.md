@@ -1,10 +1,14 @@
 # PowerDNS-Admin
 PowerDNS Web-GUI - Built by Flask
+[![Build Status](https://travis-ci.org/thomasDOTde/PowerDNS-Admin.svg?branch=master)](https://travis-ci.org/thomasDOTde/PowerDNS-Admin)
 
 #### Features:
 - Multiple domain management
 - Local / LDAP user authentication
 - Support Two-factor authentication (TOTP)
+- Support SAML authentication
+- Google oauth authentication
+- Github oauth authentication
 - User management
 - User access management based on domain
 - User activity logging
@@ -73,6 +77,14 @@ Web application configuration is stored in `config.py` file. Let's clone it from
 (flask)$ vim config.py
 ```
 
+You can configure group based security by tweaking the below parameters in `config.py`. Groups membership comes from LDAP.
+Setting `LDAP_GROUP_SECURITY` to True enables group-based security. With this enabled only members of the two groups listed below are allowed to login. Members of `LDAP_ADMIN_GROUP` will get the Administrator role and members of `LDAP_USER_GROUP` will get the User role. Sample config below:
+```
+LDAP_GROUP_SECURITY = True
+LDAP_ADMIN_GROUP = 'CN=PowerDNS-Admin Admin,OU=Custom,DC=ivan,DC=local'
+LDAP_USER_GROUP = 'CN=PowerDNS-Admin User,OU=Custom,DC=ivan,DC=local'
+```
+
 Create database after having proper configs
 ```
 (flask)% ./create_db.py
@@ -82,6 +94,48 @@ Create database after having proper configs
 Run the application and enjoy!
 ```
 (flask)$ ./run.py
+```
+
+### SAML Authentication
+SAML authentication is supported. Setting are retrieved from Metdata-XML.
+Metadata URL is configured in config.py as well as caching interval.
+Following Assertions are supported and used by this application:
+- nameidentifier in form of email address as user login
+- email used as user email address
+- givenname used as firstname
+- surname used as lastname
+
+### ADFS claim rules as example
+Microsoft Active Directory Federation Services can be used as Identity Provider for SAML login.
+The Following rules should be configured to send all attribute information to PowerDNS-Admin.
+The nameidentifier should be something stable from the idp side. All other attributes are update when singing in.
+
+#### sending the nameidentifier
+Name-Identifiers Type is "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"
+```
+c:[Type == "<here goes your source claim>"]
+ => issue(Type = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier", Issuer = c.Issuer, OriginalIssuer = c.OriginalIssuer, Value = c.Value, ValueType = c.ValueType, Properties["http://schemas.xmlsoap.org/ws/2005/05/identity/claimproperties/format"] = "urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress");
+```
+
+#### sending the firstname
+Name-Identifiers Type is "givenname"
+```
+c:[Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname"]
+ => issue(Type = "givenname", Issuer = c.Issuer, OriginalIssuer = c.OriginalIssuer, Value = c.Value, ValueType = c.ValueType, Properties["http://schemas.xmlsoap.org/ws/2005/05/identity/claimproperties/format"] = "urn:oasis:names:tc:SAML:1.1:nameid-format:transient");
+```
+
+#### sending the lastname
+Name-Identifiers Type is "surname"
+```
+c:[Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/surname"]
+ => issue(Type = "surname", Issuer = c.Issuer, OriginalIssuer = c.OriginalIssuer, Value = c.Value, ValueType = c.ValueType, Properties["http://schemas.xmlsoap.org/ws/2005/05/identity/claimproperties/format"] = "urn:oasis:names:tc:SAML:1.1:nameid-format:transient");
+```
+
+#### sending the email
+Name-Identifiers Type is "email"
+```
+c:[Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"]
+ => issue(Type = "email", Issuer = c.Issuer, OriginalIssuer = c.OriginalIssuer, Value = c.Value, ValueType = c.ValueType, Properties["http://schemas.xmlsoap.org/ws/2005/05/identity/claimproperties/format"] = "urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress");
 ```
 
 ### Screenshots

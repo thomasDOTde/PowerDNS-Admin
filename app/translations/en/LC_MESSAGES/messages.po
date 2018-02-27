@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2018-02-27 13:20-0300\n"
+"POT-Creation-Date: 2018-02-27 18:06-0300\n"
 "PO-Revision-Date: 2018-01-16 19:41+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -18,15 +18,169 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.5.3\n"
 
-#: app/templates/admin.html:31
+#: app/views.py:594
+#, python-format
+msgid "Apply record changes to domain %s"
+msgstr ""
+
+#: app/templates/admin.html:2 app/templates/admin_history.html:2
+#: app/templates/admin_manageuser.html:2 app/templates/admin_settings.html:2
+#: app/templates/login.html:6 app/templates/register.html:6
+#: app/templates/user_profile.html:2
+msgid "Control Panel"
+msgstr ""
+
+#: app/templates/admin.html:2 app/templates/base.html:129
+msgid "Admin Console"
+msgstr ""
+
+#: app/templates/admin.html:24 app/templates/dashboard.html:26
+msgid "Statistics"
+msgstr ""
+
+#: app/templates/admin.html:31 app/templates/admin.html:67
 msgid "Statistic"
 msgstr ""
 
-#: app/templates/admin.html:32
+#: app/templates/admin.html:32 app/templates/admin.html:68
+#: app/templates/admin_settings.html:28
 msgid "Value"
 msgstr ""
 
-#: app/templates/base.html:90
+#: app/templates/admin.html:60
+msgid "Configuration"
+msgstr ""
+
+#: app/templates/admin.html:66
+msgid "Docs"
+msgstr ""
+
+#: app/templates/admin_history.html:2 app/templates/admin_history.html:7
+#: app/templates/admin_history.html:12 app/templates/base.html:131
+#: app/templates/dashboard.html:62
+msgid "History"
+msgstr ""
+
+#: app/templates/admin_history.html:21
+msgid "History Management"
+msgstr ""
+
+#: app/templates/admin_history.html:25 app/templates/admin_history.html:99
+msgid "Clear History"
+msgstr ""
+
+#: app/templates/admin_history.html:32 app/templates/dashboard.html:98
+msgid "Changed By"
+msgstr ""
+
+#: app/templates/admin_history.html:33 app/templates/dashboard.html:99
+msgid "Content"
+msgstr ""
+
+#: app/templates/admin_history.html:34 app/templates/dashboard.html:100
+msgid "Time"
+msgstr ""
+
+#: app/templates/admin_history.html:35 app/templates/dashboard.html:101
+msgid "Detail"
+msgstr ""
+
+#: app/templates/admin_history.html:45
+msgid "Info"
+msgstr ""
+
+#: app/templates/admin_history.html:91
+msgid "Confirmation"
+msgstr ""
+
+#: app/templates/admin_history.html:94
+msgid "Are you sure you want to remove all history?"
+msgstr ""
+
+#: app/templates/admin_history.html:98 app/templates/admin_history.html:121
+#: app/templates/base.html:208 app/templates/base.html:218
+#: app/templates/base.html:241 app/templates/dashboard.html:265
+#: app/templates/dashboard.html:288
+msgid "Close"
+msgstr ""
+
+#: app/templates/admin_history.html:114 app/templates/dashboard.html:258
+msgid "History Details"
+msgstr ""
+
+#: app/templates/admin_manageuser.html:2 app/templates/admin_manageuser.html:20
+msgid "User Management"
+msgstr ""
+
+#: app/templates/admin_manageuser.html:6 app/templates/admin_manageuser.html:11
+#: app/templates/dashboard.html:47
+msgid "User"
+msgstr ""
+
+#: app/templates/admin_manageuser.html:6
+msgid "Manage user privileges"
+msgstr ""
+
+#: app/templates/admin_manageuser.html:25
+msgid "Add User"
+msgstr ""
+
+#: app/templates/admin_manageuser.html:33 app/templates/register.html:59
+msgid "Username"
+msgstr ""
+
+#: app/templates/admin_manageuser.html:34 app/templates/register.html:43
+#: app/templates/user_profile.html:41
+msgid "First Name"
+msgstr ""
+
+#: app/templates/admin_manageuser.html:35 app/templates/user_profile.html:46
+msgid "Last Name"
+msgstr ""
+
+#: app/templates/admin_manageuser.html:36
+msgid "Admin"
+msgstr ""
+
+#: app/templates/admin_manageuser.html:37
+msgid "Privileges"
+msgstr ""
+
+#: app/templates/admin_manageuser.html:38
+msgid "Deletion"
+msgstr ""
+
+#: app/templates/admin_manageuser.html:52
+msgid "Revoke"
+msgstr ""
+
+#: app/templates/admin_manageuser.html:57 app/templates/domain.html:50
+msgid "Delete"
+msgstr ""
+
+#: app/templates/admin_settings.html:2 app/templates/admin_settings.html:7
+#: app/templates/admin_settings.html:12 app/templates/base.html:132
+msgid "Settings"
+msgstr ""
+
+#: app/templates/admin_settings.html:7
+msgid "settings"
+msgstr ""
+
+#: app/templates/admin_settings.html:21
+msgid "Settings Management"
+msgstr ""
+
+#: app/templates/admin_settings.html:27 app/templates/domain.html:44
+msgid "Name"
+msgstr ""
+
+#: app/templates/admin_settings.html:29 app/templates/user_profile.html:32
+msgid "Change"
+msgstr ""
+
+#: app/templates/base.html:90 app/templates/user_profile.html:2
+#: app/templates/user_profile.html:12
 msgid "My Profile"
 msgstr ""
 
@@ -42,33 +196,24 @@ msgstr ""
 msgid "New Domain"
 msgstr ""
 
+#: app/templates/base.html:128
+msgid "ADMINISTRATION"
+msgstr ""
+
 #: app/templates/base.html:130 app/templates/dashboard.html:47
 msgid "Users"
 msgstr ""
 
-#: app/templates/base.html:131
-msgid "History"
-msgstr ""
-
-#: app/templates/base.html:132
-msgid "Settings"
+#: app/templates/base.html:146
+msgid "Control panel"
 msgstr ""
 
 #: app/templates/base.html:211
 msgid "Error"
 msgstr ""
 
-#: app/templates/base.html:218 app/templates/base.html:241
-#: app/templates/dashboard.html:265 app/templates/dashboard.html:288
-msgid "Close"
-msgstr ""
-
 #: app/templates/base.html:234
 msgid "Success"
-msgstr ""
-
-#: app/templates/dashboard.html:26
-msgid "Statistics"
 msgstr ""
 
 #: app/templates/dashboard.html:35
@@ -80,28 +225,16 @@ msgstr ""
 msgid "Domain"
 msgstr ""
 
-#: app/templates/dashboard.html:47
-msgid "User"
+#: app/templates/dashboard.html:62
+msgid "Histories"
 msgstr ""
 
 #: app/templates/dashboard.html:77
 msgid "Uptime"
 msgstr ""
 
-#: app/templates/dashboard.html:98
-msgid "Changed By"
-msgstr ""
-
-#: app/templates/dashboard.html:99
-msgid "Content"
-msgstr ""
-
-#: app/templates/dashboard.html:100
-msgid "Time"
-msgstr ""
-
-#: app/templates/dashboard.html:101
-msgid "Detail"
+#: app/templates/dashboard.html:92
+msgid "Recent History"
 msgstr ""
 
 #: app/templates/dashboard.html:128
@@ -124,16 +257,12 @@ msgstr ""
 msgid "Disabled"
 msgstr ""
 
-#: app/templates/domain.html:44
-msgid "Name"
+#: app/templates/dashboard.html:181 app/templates/dashboard.html:187
+msgid "Manage"
 msgstr ""
 
 #: app/templates/domain.html:49
 msgid "Edit"
-msgstr ""
-
-#: app/templates/domain.html:50
-msgid "Delete"
 msgstr ""
 
 #: app/templates/login.html:6
@@ -157,6 +286,58 @@ msgstr ""
 msgid "Create an account"
 msgstr ""
 
+#: app/templates/register.html:6 app/templates/register.html:79
+msgid "Register"
+msgstr ""
+
+#: app/templates/register.html:40
+msgid "Enter your personal details below"
+msgstr ""
+
+#: app/templates/register.html:48
+msgid "Last name"
+msgstr ""
+
+#: app/templates/register.html:53
+msgid "Email"
+msgstr ""
+
+#: app/templates/register.html:57
+msgid "Enter your account details below"
+msgstr ""
+
+#: app/templates/register.html:64 app/templates/user_profile.html:33
+msgid "Password"
+msgstr ""
+
+#: app/templates/register.html:76
+msgid "Back"
+msgstr ""
+
+#: app/templates/user_profile.html:7
+msgid "Profile"
+msgstr ""
+
+#: app/templates/user_profile.html:8 app/templates/user_profile.html:22
+msgid "Edit my profile"
+msgstr ""
+
+#: app/templates/user_profile.html:22
+msgid "Disabled - Authenticated externally"
+msgstr ""
+
+#: app/templates/user_profile.html:34
+msgid "Authentication"
+msgstr ""
+
+#: app/templates/user_profile.html:51
+msgid "E-mail"
+msgstr ""
+
+#: app/templates/user_profile.html:56
+msgid "Submit"
+msgstr ""
+
 #~ msgid "*Remember Me"
 #~ msgstr ""
 
@@ -167,5 +348,44 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "Hosted"
+#~ msgstr ""
+
+#~ msgid "Statistics"
+#~ msgstr ""
+
+#~ msgid "Domains"
+#~ msgstr ""
+
+#~ msgid "User"
+#~ msgstr ""
+
+#~ msgid "Uptime"
+#~ msgstr ""
+
+#~ msgid "Changed By"
+#~ msgstr ""
+
+#~ msgid "Content"
+#~ msgstr ""
+
+#~ msgid "Time"
+#~ msgstr ""
+
+#~ msgid "Detail"
+#~ msgstr ""
+
+#~ msgid "Hosted Domains"
+#~ msgstr ""
+
+#~ msgid "Action"
+#~ msgstr ""
+
+#~ msgid "Enabled"
+#~ msgstr ""
+
+#~ msgid "Disabled"
+#~ msgstr ""
+
+#~ msgid "Changed by"
 #~ msgstr ""
 

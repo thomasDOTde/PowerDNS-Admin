@@ -1,15 +1,15 @@
 {% extends "base.html" %} {% block title %}
-<title>DNS Control Panel - History</title>
+<title>DNS {{ _('Control Panel') }} - {{ _('History') }}</title>
 {% endblock %} {% block dashboard_stat %}
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
-        History <small>Recent PowerDNS-Admin events</small>
+        {{ _('History') }} <small>Recent PowerDNS-Admin events</small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="{{ url_for('dashboard') }}"><i
                 class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">History</li>
+        <li class="active">{{ _('History') }}</li>
     </ol>
 </section>
 {% endblock %} {% block content %}
@@ -18,21 +18,21 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">History Management</h3>
+                    <h3 class="box-title">{{ _('History Management') }}</h3>
                 </div>
                 <div class="box-body clearfix">
                     <button type="button" class="btn btn-flat btn-danger pull-right" data-toggle="modal" data-target="#modal_clear_history">
-                        Clear History&nbsp;<i class="fa fa-trash"></i>
+                        {{ _('Clear History') }}&nbsp;<i class="fa fa-trash"></i>
                     </button>
                 </div>
                 <div class="box-body">
                     <table id="tbl_history" class="table table-bordered table-striped">
                         <thead>
                             <tr>
-                                <th>Changed by</th>
-                                <th>Content</th>
-                                <th>Time</th>
-                                <th>Detail</th>
+                                <th>{{ _('Changed By') }}</th>
+                                <th>{{ _('Content') }}</th>
+                                <th>{{ _('Time') }}</th>
+                                <th>{{ _('Detail') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -42,7 +42,7 @@
                                 <td>{{ history.msg }}</td>
                                 <td>{{ history.created_on }}</td>
                                 <td width="6%">
-                                    <button type="button" class="btn btn-flat btn-primary history-info-button" value='{{ history.detail }}'>Info&nbsp;<i class="fa fa-info"></i>
+                                    <button type="button" class="btn btn-flat btn-primary history-info-button" value='{{ history.detail }}'>{{ _('Info') }}&nbsp;<i class="fa fa-info"></i>
                                     </button>
                                 </td>
                             </tr>
@@ -88,15 +88,15 @@
                     aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <h4 class="modal-title">Confirmation</h4>
+                <h4 class="modal-title">{{ _('Confirmation') }}</h4>
             </div>
             <div class="modal-body">
-                <p>Are you sure you want to remove all history?</p>
+                <p>{{ _('Are you sure you want to remove all history?') }}</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-flat btn-default pull-left"
-                    data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-flat btn-danger" onclick="applyChanges('', $SCRIPT_ROOT + '/admin/history');location.reload();">Clear History</button>
+                    data-dismiss="modal">{{ _('Close') }}</button>
+                <button type="button" class="btn btn-flat btn-danger" onclick="applyChanges('', $SCRIPT_ROOT + '/admin/history');location.reload();">{{ _('Clear History') }}</button>
             </div>
         </div>
         <!-- /.modal-content -->
@@ -111,14 +111,14 @@
                     aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <h4 class="modal-title">History Details</h4>
+                <h4 class="modal-title">{{ _('History Details') }}</h4>
             </div>
             <div class="modal-body">
                 <pre><code id="modal-code-content"></code></pre>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-flat btn-default pull-right"
-                    data-dismiss="modal">Close</button>
+                    data-dismiss="modal">{{ _('Close') }}</button>
             </div>
         </div>
         <!-- /.modal-content -->

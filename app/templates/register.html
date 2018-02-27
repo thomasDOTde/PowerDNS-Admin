@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>DNS Control Panel - Register</title>
+  <title>DNS {{ _('Control Panel') }} - {{ _('Register') }}</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
@@ -37,31 +37,31 @@
                 {{ error }}
             </div>
             {% endif %}
-            <p class="login-box-msg">Enter your personal details below</p>
+            <p class="login-box-msg">{{ _('Enter your personal details below') }}</p>
             <form action="{{ url_for('login') }}" method="post">
                 <div class="form-group has-feedback">
-                    <input type="text" class="form-control" placeholder="First Name"
+                    <input type="text" class="form-control" placeholder="{{ _('First Name') }}"
                         name="firstname"> <span
                         class="glyphicon glyphicon-user form-control-feedback"></span>
                 </div>
                 <div class="form-group has-feedback">
-                    <input type="text" class="form-control" placeholder="Last name"
+                    <input type="text" class="form-control" placeholder="{{ _('Last name') }}"
                         name="lastname"> <span
                         class="glyphicon glyphicon-user form-control-feedback"></span>
                 </div>
                 <div class="form-group has-feedback">
-                    <input type="email" class="form-control" placeholder="Email"
+                    <input type="email" class="form-control" placeholder="{{ _('Email') }}"
                         name="email"> <span
                         class="glyphicon glyphicon-envelope form-control-feedback"></span>
                 </div>
-                <p class="login-box-msg">Enter your account details below</p>
+                <p class="login-box-msg">{{ _('Enter your account details below') }}</p>
                 <div class="form-group has-feedback">
-                    <input type="text" class="form-control" placeholder="Username"
+                    <input type="text" class="form-control" placeholder="{{ _('Username') }}"
                         name="username"> <span
                         class="glyphicon glyphicon-user form-control-feedback"></span>
                 </div>
                 <div class="form-group has-feedback">
-                    <input type="password" class="form-control" placeholder="Password"
+                    <input type="password" class="form-control" placeholder="{{ _('Password') }}"
                         name="password"> <span
                         class="glyphicon glyphicon-lock form-control-feedback"></span>
                 </div>
@@ -73,10 +73,10 @@
                 <div class="row">
                     <div class="col-xs-4 pull-left">
                         <button type="button" class="btn btn-flat btn-block"
-                            id="button_back">Back</button>
+                            id="button_back">{{ _('Back') }}</button>
                     </div>
                     <div class="col-xs-4 pull-right">
-                        <button type="submit" class="btn btn-flat btn-primary btn-block">Register</button>
+                        <button type="submit" class="btn btn-flat btn-primary btn-block">{{ _('Register') }}</button>
                     </div>
                     <!-- /.col -->
                 </div>

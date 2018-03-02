@@ -119,3 +119,9 @@ REVERSE_RECORDS_ALLOW_EDIT = ['TXT', 'LOC', 'NS', 'PTR']
 
 # EXPERIMENTAL FEATURES
 PRETTY_IPV6_PTR = False
+
+# LANGUAGE
+LANGUAGES = {
+    'en': 'English',
+    'pt_BR':'Portugues Brasil'
+}

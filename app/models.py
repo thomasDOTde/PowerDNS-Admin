@@ -194,7 +194,10 @@ class User(db.Model):
                 return False
 
             if LDAP_TYPE == 'ad':
-                searchFilter = "(&(objectcategory=person)(%s=%s)(%s))" % (LDAP_USERNAMEFIELD, self.username, LDAP_FILTER)
+              if not LDAP_FILTER:
+                searchFilter = "(&(objectcategory=person)(%s=%s))" % (LDAP_USERNAMEFIELD, self.username)
+              else: 
+                searchFilter = "(&(objectcategory=person)(%s=%s)(%s))" % (LDAP_USERNAMEFIELD, self.username,LDAP_FILTER)
 
             elif LDAP_TYPE == 'ldap':
                 searchFilter = "(&(%s=%s)(%s))" % (LDAP_USERNAMEFIELD, self.username, LDAP_FILTER)

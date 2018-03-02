@@ -23,7 +23,7 @@
         <div class="col-xs-3">
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">Statistics</h3>
+                    <h3 class="box-title">{{_('Statistics')}}</h3>
                 </div>
                 <div class="box-body">
                   <div class="row">
@@ -32,7 +32,7 @@
                       <div class="small-box bg-aqua">
                         <div class="inner">
                           <h3>{{ domain_count }}</h3>
-                          <p>{% if domain_count > 1 %}Domains{% else %}Domain{% endif %}</p>
+                          <p>{% if domain_count > 1 %}{{_('Domains')}}{% else %}{{_('Domain')}}{% endif %}</p>
                         </div>
                         <div class="icon">
                           <i class="fa fa-book"></i>
@@ -44,7 +44,7 @@
                       <div class="small-box bg-green">
                         <div class="inner">
                           <h3>{{ users|length }}</h3>
-                          <p>{% if users|length > 1 %}Users{% else %}User{% endif %}</p>
+                          <p>{% if users|length > 1 %}{{_('Users')}}{% else %}{{_('User')}}{% endif %}</p>
                         </div>
                         <div class="icon">
                           <i class="fa fa-users"></i>
@@ -59,7 +59,7 @@
                       <div class="small-box bg-green">
                         <div class="inner">
                           <h3>{{ history_number }}</h3>
-                          <p>{% if history_number > 1 %}Histories{% else %}History{% endif %}</p>
+                          <p>{% if history_number > 1 %}{{ _('Histories') }}{% else %}{{ _('History') }}{% endif %}</p>
                         </div>
                         <div class="icon">
                           <i class="fa fa-calendar"></i>
@@ -71,8 +71,10 @@
                       <a href="{{ url_for('admin') }}">
                       <div class="small-box bg-green">
                         <div class="inner">
+{% autoescape false %}
                           <h3><span style="font-size: 18px">{{ uptime|display_second_to_time }}</span></h3>
-                          <p>Uptime</p>
+{% endautoescape %}
+                          <p>{{_('Uptime')}}</p>
                         </div>
                         <div class="icon">
                           <i class="fa fa-clock-o"></i>
@@ -87,16 +89,16 @@
         <div class="col-xs-9">
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">Recent History</h3>
+                    <h3 class="box-title">{{ _('Recent History') }}</h3>
                 </div>
                 <div class="box-body">
                     <table id="tbl_history" class="table table-bordered table-striped">
                     <thead>
                     <tr>
-                      <th>Changed By</th>
-                      <th>Content</th>
-                      <th>Time</th>
-                      <th>Detail</th>
+                      <th>{{ _('Changed By') }}</th>
+                      <th>{{ _('Content') }}</th>
+                      <th>{{ _('Time') }}</th>
+                      <th>{{ _('Detail') }}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -123,7 +125,7 @@
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Hosted Domains</h3>
+              <h3 class="box-title">{{_('Hosted Domains')}}</h3>
             </div>
             <!-- /.box-header -->
             <!--
@@ -139,12 +141,12 @@
               <table id="tbl_domain_list" class="table table-bordered table-striped">
                 <thead>
                 <tr>
-                  <th>Name</th>
+                  <th>{{_('Domain')}}</th>
                   <th>DNSSEC</th>
-                  <th>Type</th>
+                  <th>{{_('Type')}}</th>
                   <th>Serial</th>
                   <th>Master</th>
-                  <th>Action</th>
+                  <th>{{_('Action')}}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -156,11 +158,11 @@
                   <td>
                     {% if domain.dnssec %}
                     <button type="button" class="btn btn-flat dnssec btn-success button_dnssec" id="{{ domain.name }}" style="width:100%;">
-                        <i class="fa fa-lock"></i>&nbsp;Enabled
+                        <i class="fa fa-lock"></i>&nbsp;{{_('Enabled')}}
                     </button>
                     {% else %}
                     <button type="button" class="btn btn-flat dnssec button_dnssec" id="{{ domain.name }}" style="width:100%;">
-                        <i class="fa fa-unlock-alt"></i>&nbsp;Disabled
+                        <i class="fa fa-unlock-alt"></i>&nbsp;{{_('Disabled')}}
                     </button>
                     {% endif %}
                   </td>
@@ -176,13 +178,13 @@
                   {% if current_user.role.name !='Administrator' %}
                   <td width="6%">
                     <button type="button" class="btn btn-flat btn-success" onclick="window.location.href='{{ url_for('domain', domain_name=domain.name) }}'">
-                      Manage&nbsp;<i class="fa fa-cog"></i>
+                      {{ _('Manage') }}&nbsp;<i class="fa fa-cog"></i>
                     </button>
                   </td>
                   {% else %}
                   <td width="20%">
                     <button type="button" class="btn btn-flat btn-success" onclick="window.location.href='{{ url_for('domain', domain_name=domain.name) }}'">
-                      Manage&nbsp;<i class="fa fa-cog"></i>
+                      {{ _('Manage') }}&nbsp;<i class="fa fa-cog"></i>
                     </button>
                     <button type="button" class="btn btn-flat btn-danger" onclick="window.location.href='{{ url_for('domain_management', domain_name=domain.name) }}'">
                       Admin&nbsp;<i class="fa fa-cog"></i>
@@ -253,14 +255,14 @@
                     aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <h4 class="modal-title">History Details</h4>
+                <h4 class="modal-title">{{ _('History Details') }}</h4>
             </div>
             <div class="modal-body">
                 <pre><code id="modal-code-content"></code></pre>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-flat btn-default pull-right"
-                    data-dismiss="modal">Close</button>
+                    data-dismiss="modal">{{_('Close')}}</button>
             </div>
         </div>
         <!-- /.modal-content -->
@@ -283,7 +285,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-flat btn-default pull-right"
-                    data-dismiss="modal">Close</button>
+                    data-dismiss="modal">{{_('Close')}}</button>
             </div>
         </div>
         <!-- /.modal-content -->

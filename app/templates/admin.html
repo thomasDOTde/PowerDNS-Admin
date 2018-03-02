@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}<title>DNS Control Panel - Admin Console</title>{% endblock %}
+{% block title %}<title>DNS {{ _('Control Panel') }} - {{ _('Admin Console') }}</title>{% endblock %}
 
 {% block dashboard_stat %}
 <!-- Content Header (Page header) -->
@@ -21,15 +21,15 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">PDNS Statistics</h3>
+                    <h3 class="box-title">PDNS {{ _('Statistics') }}</h3>
                 </div>
                 <div class="box-body">
                     <table id="tbl_statistics" class="table table-bordered table-striped">
                         <thead>
                             <tr>
                                 <th width="6%">Docs</th>
-                                <th>Statistic</th>
-                                <th>Value</th>
+                                <th>{{ _('Statistic') }}</th>
+                                <th>{{ _('Value') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -57,15 +57,15 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">PDNS Configuration</h3>
+                    <h3 class="box-title">PDNS {{ _('Configuration') }}</h3>
                 </div>
                 <div class="box-body">
                     <table id="tbl_configuration" class="table table-bordered table-striped">
                         <thead>
                             <tr>
-                                <th width="6%">Docs</th>
-                                <th>Statistic</th>
-                                <th>Value</th>
+                                <th width="6%">{{ _('Docs') }}</th>
+                                <th>{{ _('Statistic') }}</th>
+                                <th>{{ _('Value') }}</th>
                             </tr>
                         </thead>
                         <tbody>

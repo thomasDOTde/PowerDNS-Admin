@@ -9,7 +9,7 @@
     <ol class="breadcrumb">
         <li><a href="{{ url_for('dashboard') }}"><i
                 class="fa fa-dashboard"></i> Home</a></li>
-        <li>Domain</li>
+        <li>{{ _('Domain') }}</li>
         <li class="active">{{ domain.name }}</li>
     </ol>
 </section>
@@ -41,13 +41,13 @@
                     <table id="tbl_records" class="table table-bordered table-striped">
                         <thead>
                             <tr>
-                                <th>Name</th>
-                                <th>Type</th>
+                                <th>{{ _('Name')}}</th>
+                                <th>{{ _('Type')}}</th>
                                 <th>Status</th>
                                 <th>TTL</th>
                                 <th>Data</th>
-                                <th>Edit</th>
-                                <th>Delete</th>
+                                <th>{{ _('Edit') }}</th>
+                                <th>{{ _('Delete') }}</th>
                             </tr>
                         </thead>
                         <tbody>

@@ -54,6 +54,14 @@ For testing purpose, you could also use SQLite as backend. This way you do not h
 
 ### PowerDNS-Admin
 
+#### Requirements
+
+For Debian/Ubuntu:
+
+```
+$ sudo apt install libmysqlclient-dev libldap2-dev libldap-2.4-2 libsasl2-dev libxml2-dev libxmlsec1-dev
+```
+
 In this installation guide, I am using CentOS 7 and run my python stuffs with *virtualenv*. If you don't have it, lets install it:
 ```
 $ sudo yum install python-pip

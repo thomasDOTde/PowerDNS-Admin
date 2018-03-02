@@ -1,0 +1,388 @@
+# Portuguese (Brazil) translations for PROJECT.
+# Copyright (C) 2018 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2018.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2018-02-27 18:06-0300\n"
+"PO-Revision-Date: 2018-01-16 20:01+0000\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: pt_BR\n"
+"Language-Team: pt_BR <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.5.3\n"
+
+#: app/views.py:594
+#, python-format
+msgid "Apply record changes to domain %s"
+msgstr "Altera&ccedil;&otilde;es no(s) registro(s) do dom&iacute;nio %s"
+
+#: app/templates/admin.html:2 app/templates/admin_history.html:2
+#: app/templates/admin_manageuser.html:2 app/templates/admin_settings.html:2
+#: app/templates/login.html:6 app/templates/register.html:6
+#: app/templates/user_profile.html:2
+msgid "Control Panel"
+msgstr "Painel de Controle"
+
+#: app/templates/admin.html:2 app/templates/base.html:129
+msgid "Admin Console"
+msgstr "Console"
+
+#: app/templates/admin.html:24 app/templates/dashboard.html:26
+msgid "Statistics"
+msgstr "Estat&iacute;sticas"
+
+#: app/templates/admin.html:31 app/templates/admin.html:67
+msgid "Statistic"
+msgstr "Estat&iacute;stica"
+
+#: app/templates/admin.html:32 app/templates/admin.html:68
+#: app/templates/admin_settings.html:28
+msgid "Value"
+msgstr "Valor"
+
+#: app/templates/admin.html:60
+msgid "Configuration"
+msgstr "Configura&ccedil;&atilde;o"
+
+#: app/templates/admin.html:66
+msgid "Docs"
+msgstr ""
+
+#: app/templates/admin_history.html:2 app/templates/admin_history.html:7
+#: app/templates/admin_history.html:12 app/templates/base.html:131
+#: app/templates/dashboard.html:62
+msgid "History"
+msgstr "Hist&oacute;rico"
+
+#: app/templates/admin_history.html:21
+msgid "History Management"
+msgstr "Gestão do Hist&oacute;rico"
+
+#: app/templates/admin_history.html:25 app/templates/admin_history.html:99
+msgid "Clear History"
+msgstr "Limpar hist&oacute;rico"
+
+#: app/templates/admin_history.html:32 app/templates/dashboard.html:98
+msgid "Changed By"
+msgstr "Modificado por"
+
+#: app/templates/admin_history.html:33 app/templates/dashboard.html:99
+msgid "Content"
+msgstr "Conte&uacute;do"
+
+#: app/templates/admin_history.html:34 app/templates/dashboard.html:100
+msgid "Time"
+msgstr "Data/Hora"
+
+#: app/templates/admin_history.html:35 app/templates/dashboard.html:101
+msgid "Detail"
+msgstr "Detalhes"
+
+#: app/templates/admin_history.html:45
+msgid "Info"
+msgstr ""
+
+#: app/templates/admin_history.html:91
+msgid "Confirmation"
+msgstr "Confirma&ccedil;&atilde;o"
+
+#: app/templates/admin_history.html:94
+msgid "Are you sure you want to remove all history?"
+msgstr "Deseja remover completamente o hist&oacute;rico?"
+
+#: app/templates/admin_history.html:98 app/templates/admin_history.html:121
+#: app/templates/base.html:208 app/templates/base.html:218
+#: app/templates/base.html:241 app/templates/dashboard.html:265
+#: app/templates/dashboard.html:288
+msgid "Close"
+msgstr "Fechar"
+
+#: app/templates/admin_history.html:114 app/templates/dashboard.html:258
+msgid "History Details"
+msgstr "Hist&oacute;rico"
+
+#: app/templates/admin_manageuser.html:2 app/templates/admin_manageuser.html:20
+msgid "User Management"
+msgstr "Ger&ecirc;ncia de usu&aacute;rios"
+
+#: app/templates/admin_manageuser.html:6 app/templates/admin_manageuser.html:11
+#: app/templates/dashboard.html:47
+msgid "User"
+msgstr "Usu&aacute;rio"
+
+#: app/templates/admin_manageuser.html:6
+msgid "Manage user privileges"
+msgstr "Definir privil&eacute;gios do usu&aacute;rio"
+
+#: app/templates/admin_manageuser.html:25
+msgid "Add User"
+msgstr "Inserir usu&aacute;rio"
+
+#: app/templates/admin_manageuser.html:33 app/templates/register.html:59
+msgid "Username"
+msgstr "Usu&aacute;rio"
+
+#: app/templates/admin_manageuser.html:34 app/templates/register.html:43
+#: app/templates/user_profile.html:41
+msgid "First Name"
+msgstr "Primeiro nome"
+
+#: app/templates/admin_manageuser.html:35 app/templates/user_profile.html:46
+msgid "Last Name"
+msgstr "&Uacute;ltimo nome"
+
+#: app/templates/admin_manageuser.html:36
+msgid "Admin"
+msgstr "Admin"
+
+#: app/templates/admin_manageuser.html:37
+msgid "Privileges"
+msgstr "Privil&eacute;gios"
+
+#: app/templates/admin_manageuser.html:38
+msgid "Deletion"
+msgstr "Remo&ccedil;&atilde;o"
+
+#: app/templates/admin_manageuser.html:52
+msgid "Revoke"
+msgstr "Revogar"
+
+#: app/templates/admin_manageuser.html:57 app/templates/domain.html:50
+msgid "Delete"
+msgstr "Remover"
+
+#: app/templates/admin_settings.html:2 app/templates/admin_settings.html:7
+#: app/templates/admin_settings.html:12 app/templates/base.html:132
+msgid "Settings"
+msgstr "Configura&ccedil;&otilde;es"
+
+#: app/templates/admin_settings.html:7
+msgid "settings"
+msgstr ""
+
+#: app/templates/admin_settings.html:21
+msgid "Settings Management"
+msgstr ""
+
+#: app/templates/admin_settings.html:27 app/templates/domain.html:44
+msgid "Name"
+msgstr "Nome"
+
+#: app/templates/admin_settings.html:29 app/templates/user_profile.html:32
+msgid "Change"
+msgstr "Modificar"
+
+#: app/templates/base.html:90 app/templates/user_profile.html:2
+#: app/templates/user_profile.html:12
+msgid "My Profile"
+msgstr "Meu perfil"
+
+#: app/templates/base.html:93
+msgid "Log out"
+msgstr "Sair"
+
+#: app/templates/base.html:119
+msgid "Logged In"
+msgstr "Autenticado"
+
+#: app/templates/base.html:127
+msgid "New Domain"
+msgstr "Novo dom&iacute;nio"
+
+#: app/templates/base.html:128
+msgid "ADMINISTRATION"
+msgstr "ADMINISTRA&Ccedil;&Atilde;O"
+
+#: app/templates/base.html:130 app/templates/dashboard.html:47
+msgid "Users"
+msgstr "Usu&aacute;rios"
+
+#: app/templates/base.html:146
+msgid "Control panel"
+msgstr "Painel de Controle"
+
+#: app/templates/base.html:211
+msgid "Error"
+msgstr "Erro"
+
+#: app/templates/base.html:234
+msgid "Success"
+msgstr "Sucesso"
+
+#: app/templates/dashboard.html:35
+msgid "Domains"
+msgstr "Dom&iacute;nios"
+
+#: app/templates/dashboard.html:35 app/templates/dashboard.html:144
+#: app/templates/domain.html:12
+msgid "Domain"
+msgstr "Dom&iacute;nio"
+
+#: app/templates/dashboard.html:62
+msgid "Histories"
+msgstr "Hist&oacute;rico"
+
+#: app/templates/dashboard.html:77
+msgid "Uptime"
+msgstr ""
+
+#: app/templates/dashboard.html:92
+msgid "Recent History"
+msgstr "&Uacute;ltimas altera&ccedil;&otilde;es"
+
+#: app/templates/dashboard.html:128
+msgid "Hosted Domains"
+msgstr "Dom&iacute;nios registrados"
+
+#: app/templates/dashboard.html:146 app/templates/domain.html:45
+msgid "Type"
+msgstr "Tipo"
+
+#: app/templates/dashboard.html:149
+msgid "Action"
+msgstr "A&ccedil;&atilde;o"
+
+#: app/templates/dashboard.html:161
+msgid "Enabled"
+msgstr "Ativo"
+
+#: app/templates/dashboard.html:165
+msgid "Disabled"
+msgstr "Inativo"
+
+#: app/templates/dashboard.html:181 app/templates/dashboard.html:187
+msgid "Manage"
+msgstr "Registro(s)"
+
+#: app/templates/domain.html:49
+msgid "Edit"
+msgstr "Editar"
+
+#: app/templates/login.html:6
+msgid "Log In"
+msgstr "Acessar"
+
+#: app/templates/login.html:31
+#, python-format
+msgid "Sign In %(log_ttle)s"
+msgstr "Acessar %(log_ttle)s"
+
+#: app/templates/login.html:92
+msgid "Remember Me"
+msgstr "Lembrar de mim"
+
+#: app/templates/login.html:98
+msgid "Sign In"
+msgstr "Acessar"
+
+#: app/templates/login.html:116
+msgid "Create an account"
+msgstr "Criar conta"
+
+#: app/templates/register.html:6 app/templates/register.html:79
+msgid "Register"
+msgstr "Se registrar"
+
+#: app/templates/register.html:40
+msgid "Enter your personal details below"
+msgstr "Insira seus dados pessoais"
+
+#: app/templates/register.html:48
+msgid "Last name"
+msgstr "&Uacute;ltimo nome"
+
+#: app/templates/register.html:53
+msgid "Email"
+msgstr ""
+
+#: app/templates/register.html:57
+msgid "Enter your account details below"
+msgstr "Informe os detalhes da sua conta"
+
+#: app/templates/register.html:64 app/templates/user_profile.html:33
+msgid "Password"
+msgstr "Senha"
+
+#: app/templates/register.html:76
+msgid "Back"
+msgstr "Voltar"
+
+#: app/templates/user_profile.html:7
+msgid "Profile"
+msgstr "Perfil"
+
+#: app/templates/user_profile.html:8 app/templates/user_profile.html:22
+msgid "Edit my profile"
+msgstr "Editar perfil"
+
+#: app/templates/user_profile.html:22
+msgid "Disabled - Authenticated externally"
+msgstr "Desabilitado - Autentica&ccedil;&atilde;o externa"
+
+#: app/templates/user_profile.html:34
+msgid "Authentication"
+msgstr "Autentica&ccedil;&atilde;o"
+
+#: app/templates/user_profile.html:51
+msgid "E-mail"
+msgstr ""
+
+#: app/templates/user_profile.html:56
+msgid "Submit"
+msgstr "Enviar"
+
+#~ msgid "Sign In %(login_title)"
+#~ msgstr "Acessar %(login_title)"
+
+#~ msgid "Name"
+#~ msgstr "Nome"
+
+#~ msgid "Hosted"
+#~ msgstr "Hospedado(s)"
+
+#~ msgid "Statistics"
+#~ msgstr "Estat&iacute;sticas"
+
+#~ msgid "Domains"
+#~ msgstr "Dom&iacute;nios"
+
+#~ msgid "User"
+#~ msgstr "Usu&aacute;rio"
+
+#~ msgid "Uptime"
+#~ msgstr "Em produ&ccedil;&atilde;o"
+
+#~ msgid "Changed By"
+#~ msgstr "Modificado por"
+
+#~ msgid "Content"
+#~ msgstr "Conte&uacute;do"
+
+#~ msgid "Time"
+#~ msgstr "Hora"
+
+#~ msgid "Detail"
+#~ msgstr "Detalhe"
+
+#~ msgid "Hosted Domains"
+#~ msgstr "Dom&iacute;nios hospedados"
+
+#~ msgid "Action"
+#~ msgstr "A&ccedil;&atilde;o"
+
+#~ msgid "Enabled"
+#~ msgstr "Ativado"
+
+#~ msgid "Disabled"
+#~ msgstr "Desativado"
+
+#~ msgid "Changed by"
+#~ msgstr "Modificado por"
+

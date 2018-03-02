@@ -1,15 +1,15 @@
 {% extends "base.html" %} {% block title %}
-<title>DNS Control Panel - Settings</title>
+<title>DNS {{ _('Control Panel') }} - {{ _('Settings') }}</title>
 {% endblock %} {% block dashboard_stat %}
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
-        Settings <small>PowerDNS-Admin settings</small>
+        {{ _('Settings') }} <small>PowerDNS-Admin {{ _('settings') }}</small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="{{ url_for('dashboard') }}"><i
                 class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Settings</li>
+        <li class="active">{{ _('Settings') }}</li>
     </ol>
 </section>
 {% endblock %} {% block content %}
@@ -18,15 +18,15 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">Settings Management</h3>
+                    <h3 class="box-title">{{ _('Settings Management') }}</h3>
                 </div>
                 <div class="box-body">
                     <table id="tbl_settings" class="table table-bordered table-striped">
                         <thead>
                             <tr>
-                                <th>Name</th>
-                                <th>Value</th>
-                                <th>Change</th>
+                                <th>{{ _('Name') }}</th>
+                                <th>{{ _('Value') }}</th>
+                                <th>{{ _('Change') }}</th>
                             </tr>
                         </thead>
                         <tbody>

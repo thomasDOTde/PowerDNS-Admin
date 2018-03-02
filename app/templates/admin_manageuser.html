@@ -1,14 +1,14 @@
 {% extends "base.html" %} {% block title %}
-<title>DNS Control Panel - User Management</title>
+<title>DNS {{ _('Control Panel') }} - {{ _('User Management') }}</title>
 {% endblock %} {% block dashboard_stat %}
 <section class="content-header">
     <h1>
-        User <small>Manage user privileges</small>
+        {{ _('User') }} <small>{{ _('Manage user privileges') }}</small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="{{ url_for('dashboard') }}"><i
                 class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">User</li>
+        <li class="active">{{ _('User') }}</li>
     </ol>
 </section>
 {% endblock %} {% block content %}
@@ -17,12 +17,12 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">User Management</h3>
+                    <h3 class="box-title">{{ _('User Management') }}</h3>
                 </div>
                 <div class="box-body">
                     <a href="{{ url_for('admin_createuser') }}">
                         <button type="button" class="btn btn-flat btn-primary pull-left button_add_user">
-                            Add User&nbsp;<i class="fa fa-plus"></i>
+                            {{ _('Add User') }}&nbsp;<i class="fa fa-plus"></i>
                         </button>
                     </a>
                 </div>
@@ -30,12 +30,12 @@
                     <table id="tbl_users" class="table table-bordered table-striped">
                         <thead>
                             <tr>
-                                <th>Username</th>
-                                <th>First Name</th>
-                                <th>Last Name</th>
-                                <th>Admin</th>
-                                <th>Privileges</th>
-                                <th>Deletion</th>
+                                <th>{{ _('Username') }}</th>
+                                <th>{{ _('First Name') }}</th>
+                                <th>{{ _('Last Name') }}</th>
+                                <th>{{ _('Admin') }}</th>
+                                <th>{{ _('Privileges') }}</th>
+                                <th>{{ _('Deletion') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -49,12 +49,12 @@
                                 </td>
                                 <td width="6%">
                                     <button type="button" class="btn btn-flat btn-warning button_revoke" id="{{ user.username }}">
-                                        Revoke&nbsp;<i class="fa fa-lock"></i>
+                                        {{ _('Revoke') }}&nbsp;<i class="fa fa-lock"></i>
                                     </button>
                                 </td>
                                 <td width="6%">
                                     <button type="button" class="btn btn-flat btn-danger button_delete" id="{{ user.username }}">
-                                        Delete&nbsp;<i class="fa fa-trash"></i>
+                                        {{ _('Delete') }}&nbsp;<i class="fa fa-trash"></i>
                                     </button>
                                 </td>
                             </tr>

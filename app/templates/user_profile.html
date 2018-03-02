@@ -1,15 +1,15 @@
 {% extends "base.html" %}
-{% block title %}<title>DNS Control Panel - My Profile</title>{% endblock %}
+{% block title %}<title>DNS {{ _('Control Panel') }} - {{ _('My Profile') }}</title>{% endblock %}
 {% block dashboard_stat %}
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Profile
-        <small>Edit my profile</small>
+        {{ _('Profile') }}
+        <small>{{ _('Edit my profile') }}</small>
       </h1>
       <ol class="breadcrumb">
         <li><a href="{{ url_for('dashboard') }}"><i class="fa fa-dashboard"></i>Home</a></li>
-        <li class="active">My Profile</li>
+        <li class="active">{{ _('My Profile') }}</li>
       </ol>
     </section>
 {% endblock %}
@@ -19,7 +19,7 @@
         <div class="col-lg-12">
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Edit my profile{%  if external_account %} [Disabled - Authenticated externally]{% endif %}</h3>
+                    <h3 class="box-title">{{ _('Edit my profile') }}{%  if external_account %} [ {{ _('Disabled - Authenticated externally') }}]{% endif %}</h3>
                 </div>
                 <div class="box-body">
                     <!-- Custom Tabs -->
@@ -29,31 +29,31 @@
                                     Info</a></li>
                             <li><a href="#tabs-avatar" data-toggle="tab">Change
                                     Avatar</a></li>
-                            {%  if not external_account %}<li><a href="#tabs-password" data-toggle="tab">Change
-                                    Password</a></li>
-                            <li><a href="#tabs-authentication" data-toggle="tab">Authentication
-                                    </a></li>{% endif %}>
+                            {%  if not external_account %}<li><a href="#tabs-password" data-toggle="tab">{{ _('Change') }}
+                                    {{ _('Password') }}</a></li>
+                            <li><a href="#tabs-authentication" data-toggle="tab">{{ _('Authentication') }}
+                                    </a></li>{% endif %}
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane active" id="tabs-personal">
                                 <form role="form" method="post" action="{{ user_profile }}">
                                     <div class="form-group">
-                                        <label for="firstname">First Name</label> <input type="text"
+                                        <label for="firstname">{{ _('First Name') }}</label> <input type="text"
                                             class="form-control" name="firstname" id="firstname"
                                             placeholder="{{ current_user.firstname }}" {%  if external_account %}disabled{% endif %}>
                                     </div>
                                     <div class="form-group">
-                                        <label for="lastname">Last Name</label> <input type="text"
+                                        <label for="lastname">{{ _('Last Name') }}</label> <input type="text"
                                             class="form-control" name="lastname" id="lastname"
                                             placeholder="{{ current_user.lastname }}" {%  if external_account %}disabled{% endif %}>
                                     </div>
                                     <div class="form-group">
-                                        <label for="email">E-mail</label> <input type="text"
+                                        <label for="email">{{ _('E-mail') }}</label> <input type="text"
                                             class="form-control" name="email" id="email"
                                             placeholder="{{ current_user.email }}" {%  if external_account %}disabled{% endif %}>
                                     </div>{%  if not external_account %}
                                     <div class="form-group">
-                                        <button type="submit" class="btn btn-flat btn-primary">Submit</button>
+                                        <button type="submit" class="btn btn-flat btn-primary">{{ _('Submit') }}</button>
                                     </div>{% endif %}
                                 </form>
                             </div>

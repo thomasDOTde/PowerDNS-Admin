@@ -591,7 +591,7 @@ def record_apply(domain_name):
         r = Record()
         result = r.apply(domain_name, jdata)
         if result['status'] == 'ok':
-            history = History(msg={{ _('Apply record changes to domain %s') }} % domain_name, detail=str(jdata), created_by=current_user.username)
+            history = History(msg='Apply record changes to domain %s' % domain_name, detail=str(jdata), created_by=current_user.username)
             history.add()
             return make_response(jsonify( result ), 200)
         else:

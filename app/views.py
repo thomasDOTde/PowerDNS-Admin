@@ -16,7 +16,7 @@ from flask_login import login_user, logout_user, current_user, login_required
 from werkzeug import secure_filename
 from werkzeug.security import gen_salt
 
-from .models import User, Domain, Record, Server, History, Anonymous, Setting, DomainSetting
+from .models import User, Domain, Record, Server, History, Anonymous, Setting, DomainSetting, Role
 from app import app, login_manager, github, google
 from lib import utils
 if app.config['SAML_ENABLED']:
@@ -487,10 +487,14 @@ def domain(domain_name):
 
 @app.route('/admin/domain/add', methods=['GET', 'POST'])
 @login_required
-@admin_role_required
 def domain_add():
     if request.method == 'POST':
         try:
+            available_max_domains_count = current_user.role.max_domains
+            current_domains_count = len(current_user.get_domain())
+            if available_max_domains_count <= current_domains_count and available_max_domains_count != 0:
+                return render_template('errors/400.html', msg="Domains count limit exceeded"), 400
+
             domain_name = request.form.getlist('domain_name')[0]
             domain_type = request.form.getlist('radio_type')[0]
             soa_edit_api = request.form.getlist('radio_type_soa_edit_api')[0]
@@ -506,7 +510,11 @@ def domain_add():
             else:
                 domain_master_ips = []
             d = Domain()
-            result = d.add(domain_name=domain_name, domain_type=domain_type, soa_edit_api=soa_edit_api, domain_master_ips=domain_master_ips)
+            result = d.add(domain_name=domain_name,
+                           domain_type=domain_type,
+                           soa_edit_api=soa_edit_api,
+                           domain_master_ips=domain_master_ips,
+                           user_name=current_user.username)
             if result['status'] == 'ok':
                 history = History(msg='Add domain %s' % domain_name, detail=str({'domain_type': domain_type, 'domain_master_ips': domain_master_ips}), created_by=current_user.username)
                 history.add()
@@ -780,13 +788,46 @@ def admin_createuser():
 
         return redirect(url_for('admin_manageuser'))
 
+
+@app.route('/admin/managerole', methods=['GET', 'POST'])
+@login_required
+@admin_role_required
+def admin_managerole():
+    if request.method == 'GET':
+        roles = Role.query.order_by(Role.id).all()
+        return render_template('admin_managerole.html', roles=roles)
+
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.data)
+            if data['action'] == 'update-domains-count':
+                role = Role.query.get(data['data']['role-id'])
+                result = role.update_max_domains(data['data']['domains-count'])
+                if result:
+                    history = History(msg='Change role max domains of %s' % role.name,
+                                      created_by=current_user.username)
+                    history.add()
+                    return make_response(jsonify({'status': 'ok',
+                                                  'msg': 'Changed role max domains successfully.'}), 200)
+                else:
+                    return make_response(jsonify({'status': 'error',
+                                                  'msg': 'Cannot change role max domains.'}), 500)
+            else:
+                return make_response(jsonify({'status': 'error', 'msg': 'Action not supported.'}), 400)
+        except:
+            print traceback.format_exc()
+            return make_response(jsonify({'status': 'error',
+                                          'msg': 'There is something wrong, please contact Administrator.'}), 400)
+
+
 @app.route('/admin/manageuser', methods=['GET', 'POST'])
 @login_required
 @admin_role_required
 def admin_manageuser():
     if request.method == 'GET':
         users = User.query.order_by(User.username).all()
-        return render_template('admin_manageuser.html', users=users)
+        roles = Role.query.order_by(Role.id).all()
+        return render_template('admin_manageuser.html', users=users, roles=roles)
 
     if request.method == 'POST':
         #
@@ -817,20 +858,17 @@ def admin_manageuser():
                     return make_response(jsonify( { 'status': 'ok', 'msg': 'Revoked user privielges.' } ), 200)
                 else:
                     return make_response(jsonify( { 'status': 'error', 'msg': 'Cannot revoke user privilege.' } ), 500)
-
-            elif jdata['action'] == 'set_admin':
-                username = data['username']
-                is_admin = data['is_admin']
-                user = User(username=username)
-                result = user.set_admin(is_admin)
+            elif jdata['action'] == 'change_role':
+                user = User.query.get(data['user-id'])
+                result = user.change_role(data['role-id'])
                 if result:
-                    history = History(msg='Change user role of %s' % username, created_by=current_user.username)
+                    history = History(msg='Change user role of %s' % user.username, created_by=current_user.username)
                     history.add()
-                    return make_response(jsonify( { 'status': 'ok', 'msg': 'Changed user role successfully.' } ), 200)
+                    return make_response(jsonify({'status': 'ok', 'msg': 'Changed user role successfully.'}), 200)
                 else:
-                    return make_response(jsonify( { 'status': 'error', 'msg': 'Cannot change user role.' } ), 500)
+                    return make_response(jsonify({'status': 'error', 'msg': 'Cannot change user role.'}), 500)
             else:
-                return make_response(jsonify( { 'status': 'error', 'msg': 'Action not supported.' } ), 400)
+                return make_response(jsonify({'status': 'error', 'msg': 'Action not supported.'}), 400)
         except:
             print traceback.format_exc()
             return make_response(jsonify( { 'status': 'error', 'msg': 'There is something wrong, please contact Administrator.' } ), 400)

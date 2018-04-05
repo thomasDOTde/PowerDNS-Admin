@@ -438,26 +438,55 @@ class User(db.Model):
             logging.debug(traceback.format_exc())
             return False
 
+    def change_role(self, role_id):
+        role = Role.query.get(role_id)
+        try:
+            if not role:
+                return False
+            self.role_id = role.id
+            db.session.commit()
+            return True
+        except:
+            db.session.roleback()
+            logging.error('Cannot change user role in DB')
+            logging.debug(traceback.format_exc())
+            return False
+
 
 class Role(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String(64), index=True, unique=True)
+    max_domains = db.Column(db.Integer)
     description = db.Column(db.String(128))
     users = db.relationship('User', backref='role', lazy='dynamic')
 
-    def __init__(self, id=None, name=None, description=None):
+    def __init__(self, id=None, name=None, description=None, max_domains=0):
         self.id = id
         self.name = name
         self.description = description
+        self.max_domains = max_domains
 
     # allow database autoincrement to do its own ID assignments
-    def __init__(self, name=None, description=None):
+    def __init__(self, name=None, description=None, max_domains=0):
         self.id = None
         self.name = name
         self.description = description
+        self.max_domains = max_domains
 
     def __repr__(self):
-        return '<Role %r>' % (self.name)
+        return '<Role %r>' % (self.name,)
+
+    def update_max_domains(self, domains_count):
+        try:
+            self.max_domains = domains_count
+            db.session.commit()
+            return True
+        except:
+            db.session.roleback()
+            logging.error('Cannot change role domains count in DB')
+            logging.debug(traceback.format_exc())
+            return False
+
 
 class DomainSetting(db.Model):
     __tablename__ = 'domain_setting'
@@ -473,7 +502,7 @@ class DomainSetting(db.Model):
         self.value = value
 
     def __repr__(self):
-        return '<DomainSetting %r for $d>' % (setting, self.domain.name)
+        return '<DomainSetting %r for $d>' % (self.setting, self.domain.name)
 
     def __eq__(self, other):
         return self.setting == other.setting
@@ -488,6 +517,7 @@ class DomainSetting(db.Model):
             logging.debug(traceback.format_exc())
             db.session.rollback()
             return False
+
 
 class Domain(db.Model):
     id = db.Column(db.Integer, primary_key = True)
@@ -635,7 +665,7 @@ class Domain(db.Model):
             logging.error('Can not update domain table.' + str(e))
             return {'status': 'error', 'msg': 'Can not update domain table'}
 
-    def add(self, domain_name, domain_type, soa_edit_api, domain_ns=[], domain_master_ips=[]):
+    def add(self, domain_name, domain_type, soa_edit_api, domain_ns=[], domain_master_ips=[], user_name=None):
         """
         Add a domain to power dns
         """
@@ -668,6 +698,10 @@ class Domain(db.Model):
                 logging.error(jdata['error'])
                 return {'status': 'error', 'msg': jdata['error']}
             else:
+                if user_name:
+                    Domain().update()
+                    domain = Domain.query.filter(Domain.name == domain_name.rstrip('.')).first()
+                    domain.grant_privielges([user_name])
                 logging.info('Added domain %s successfully' % domain_name)
                 return {'status': 'ok', 'msg': 'Added domain successfully'}
         except Exception, e:
@@ -789,6 +823,14 @@ class Domain(db.Model):
             user_ids.append(q[0].user_id)
         return user_ids
 
+    def get_user_names(self):
+        """
+            Get users (username) who have access to this domain name
+        """
+        query = db.session.query(DomainUser, Domain).filter(User.id == DomainUser.user_id).filter(
+            Domain.id == DomainUser.domain_id).filter(Domain.name == self.name).all()
+        return [User.query.get(q[0].user_id).username for q in query]
+
     def grant_privielges(self, new_user_list):
         """
         Reconfigure domain_user table
@@ -815,6 +857,7 @@ class Domain(db.Model):
                 du = DomainUser(domain_id, uid)
                 db.session.add(du)
                 db.session.commit()
+                logging.info('Grant domain %s previlegies for user %s' % (self.name, uid))
         except:
             db.session.rollback()
             logging.error('Cannot grant user privielges to domain %s' % self.name)

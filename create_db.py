@@ -68,8 +68,9 @@ def init_settings(db, setting_names):
 def init_records():
     # Create initial user roles and turn off maintenance mode
     init_roles(db, [
-        Role('Administrator', 'Administrator'),
-        Role('User', 'User')
+        Role('Administrator', 'Administrator', 0),
+        Role('User', 'User', 5),
+        Role('PremiumUser', 'Premium User', 0)
     ])
     init_settings(db, [
         Setting('maintenance', 'False'),

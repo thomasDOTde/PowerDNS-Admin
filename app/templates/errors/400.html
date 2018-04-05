@@ -27,6 +27,9 @@
             <p>
                 The server refused to process your request and return a 400 error.
                 You may <a href="{{ url_for('dashboard') }}">return to the dashboard</a>.
+                {% if msg %}
+                  <p>Detailed message: {{ msg }}</p>
+                {% endif %}
             </p>
         </div>
         <!-- /.error-content -->

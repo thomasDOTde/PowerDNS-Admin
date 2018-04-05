@@ -33,7 +33,7 @@
                                 <th>Username</th>
                                 <th>First Name</th>
                                 <th>Last Name</th>
-                                <th>Admin</th>
+                                <th>Role</th>
                                 <th>Privileges</th>
                                 <th>Deletion</th>
                             </tr>
@@ -45,7 +45,15 @@
                                 <td>{{ user.firstname }}</td>
                                 <td>{{ user.lastname }}</td>
                                 <td>
-                                    <input type="checkbox" id="{{ user.username }}" class="admin_toggle" {% if user.role.name=='Administrator' %}checked{% endif %}>
+                                  <select id="select-{{ user.username }}" class="role-select">
+                                    {% for role in roles %}
+                                      <option data-role-id="{{ role.id }}"
+                                              data-user-id="{{ user.id }}"
+                                              {% if user.role.id == role.id %}selected{% endif %}>
+                                        {{ role.name }}
+                                      </option>
+                                    {% endfor %}
+                                  </select>
                                 </td>
                                 <td width="6%">
                                     <button type="button" class="btn btn-flat btn-warning button_revoke" id="{{ user.username }}">
@@ -70,7 +78,7 @@
     </div>
     <!-- /.row -->
 </section>
-{% endblock %} 
+{% endblock %}
 {% block extrascripts %}
 <script>
     // set up user data table
@@ -85,12 +93,12 @@
             }
         });
     });
-    
+
     // handle revocation of privileges
     $(document.body).on('click', '.button_revoke', function() {
         var modal = $("#modal_revoke");
         var username = $(this).prop('id');
-        var info = "Are you sure you want to revoke all privileges for " + username + ". They will not able to access any domain."; 
+        var info = "Are you sure you want to revoke all privileges for " + username + ". They will not able to access any domain.";
         modal.find('.modal-body p').text(info);
         modal.find('#button_revoke_confirm').click(function() {
             var postdata = {'action': 'revoke_user_privielges', 'data': username}
@@ -103,7 +111,7 @@
     $(document.body).on('click', '.button_delete', function() {
         var modal = $("#modal_delete");
         var username = $(this).prop('id');
-        var info = "Are you sure you want to delete " + username + "?"; 
+        var info = "Are you sure you want to delete " + username + "?";
         modal.find('.modal-body p').text(info);
         modal.find('#button_delete_confirm').click(function() {
             var postdata = {'action': 'delete_user', 'data': username}
@@ -111,7 +119,7 @@
             modal.modal('hide');
         })
         modal.modal('show');
-        
+
     });
 
     // initialize pretty checkboxes
@@ -119,19 +127,18 @@
         checkboxClass : 'icheckbox_square-blue',
         increaseArea : '20%' // optional
     });
-    
-    // handle checkbox toggling
-    $(document.body).on('ifToggled', '.admin_toggle', function() {
-        var is_admin = $(this).prop('checked');
-        var username = $(this).prop('id');
-        postdata = {
-            'action' : 'set_admin',
-            'data' : {
-                'username' : username,
-                'is_admin' : is_admin
-            }
-        };
-        applyChanges(postdata, $SCRIPT_ROOT + '/admin/manageuser');
+
+
+    $(document.body).on('change', '.role-select', function () {
+      var data = $(this).find(':selected').data();
+      var postdata = {
+          'action': 'change_role',
+          'data': {
+              'user-id': data.userId,
+              'role-id': data.roleId
+          }
+      }
+      applyChanges(postdata, $SCRIPT_ROOT + '/admin/manageuser', true, false)
     });
 </script>
 {% endblock %}

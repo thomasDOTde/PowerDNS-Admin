@@ -1,0 +1,75 @@
+{% extends "base.html" %} {% block title %}
+  <title>DNS Control Panel - Role Management</title>
+{% endblock %} {% block dashboard_stat %}
+  <section class="content-header">
+    <h1>
+      Role
+      <small>Manage roles</small>
+    </h1>
+    <ol class="breadcrumb">
+      <li><a href="{{ url_for('dashboard') }}"><i
+          class="fa fa-dashboard"></i> Home</a></li>
+      <li class="active">Role</li>
+    </ol>
+  </section>
+{% endblock %} {% block content %}
+  <section class="content">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="box">
+          <div class="box-header">
+            <h3 class="box-title">Role Management</h3>
+          </div>
+          <div class="box-body">
+            <table id="tbl_users" class="table table-bordered table-striped">
+              <thead>
+              <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Max domains</th>
+              </tr>
+              </thead>
+              <tbody>
+              {% for role in roles %}
+                <tr class="odd gradeX">
+                  <td>{{ role.name }}</td>
+                  <td>{{ role.description }}</td>
+                  <td>
+                    <input class="max-domains-input role-domains-input-{{ role.id }}" type="number"
+                           value="{{ role.max_domains }}">
+                    <button class="btn btn-warning btn-flat change-domains-count" data-role-id="{{ role.id }}">
+                      Update
+                    </button>
+                  </td>
+                </tr>
+              {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+      </div>
+      <!-- /.col -->
+    </div>
+    <!-- /.row -->
+  </section>
+{% endblock %}
+{% block extrascripts %}
+  <script type="text/javascript">
+      $(document.body).on('click', '.change-domains-count', function () {
+          var roleId = $(this).data().roleId
+          var domainsCount = parseInt($('.role-domains-input-' + roleId).val())
+          if (!isNaN(domainsCount)) {
+              applyChanges({
+                    'action': 'update-domains-count',
+                    'data': {
+                        'role-id': roleId,
+                        'domains-count': domainsCount
+                    }
+                },
+                $SCRIPT_ROOT + '/admin/managerole', true, false);
+          }
+      })
+  </script>
+{% endblock %}

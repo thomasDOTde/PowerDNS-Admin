@@ -144,6 +144,9 @@
                   <th>Type</th>
                   <th>Serial</th>
                   <th>Master</th>
+                  {% if current_user.role.name == 'Administrator' %}
+                    <th>User</th>
+                  {% endif %}
                   <th>Action</th>
                 </tr>
                 </thead>
@@ -181,6 +184,7 @@
                     </button>
                   </td>
                   {% else %}
+                    <td>{{ domain.get_user_names()|join(", ") }}</td>
                   <td width="20%">
                     <button type="button" class="btn btn-flat btn-success" onclick="window.location.href='{{ url_for('domain', domain_name=domain.name) }}'">
                       Manage&nbsp;<i class="fa fa-cog"></i>

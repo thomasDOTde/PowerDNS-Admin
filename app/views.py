@@ -23,6 +23,9 @@ if app.config['SAML_ENABLED']:
     from onelogin.saml2.auth import OneLogin_Saml2_Auth
     from onelogin.saml2.utils import OneLogin_Saml2_Utils
 
+from sqlalchemy import create_engine
+from time import gmtime, strftime
+
 jinja2.filters.FILTERS['display_record_name'] = utils.display_record_name
 jinja2.filters.FILTERS['display_master_name'] = utils.display_master_name
 jinja2.filters.FILTERS['display_second_to_time'] = utils.display_time
@@ -1024,6 +1027,77 @@ def dyndns_update():
     history = History(msg="DynDNS update: attempted update of %s but it does not exist for this user" % hostname, created_by=current_user.username)
     history.add()
     return render_template('dyndns.html', response='nohost'), 200
+
+
+@app.route('/powersearch', methods=['POST'])
+@login_required
+def powersearch():
+    # get and sanitize the search term
+    term = json.loads(request.data)['term']
+
+    if len(term) > 64:
+        if len(app.config['PS_LOG_FILE']) != 0:
+            with open(app.config['PS_LOG_FILE'], "a") as f:
+                f.write("{0} - user: {1} ({2}), info: search term longer than 64 chars, term: \n".format(
+                    strftime("%Y-%m-%d %H:%M:%S", gmtime()), str(current_user.id), str(current_user.username), term))
+        return json.dumps(None)
+
+    for item in term.split(' '):
+        # we only allow chars from the English alphabet, numbers from
+        # 0 to 9 and chars . _ and -
+        if not re.match("^[a-zA-Z0-9._\-]*$", item):
+            if len(app.config['PS_LOG_FILE']) != 0:
+                with open(app.config['PS_LOG_FILE'], "a") as f:
+                    f.write("{0} - user: {1} ({2}), info: search term is invalid, term: {3}\n".format(
+                        strftime("%Y-%m-%d %H:%M:%S", gmtime()), str(current_user.id), str(current_user.username), term))
+            return json.dumps(None)
+
+    # connect to the MySQL db
+    db_name = app.config['SQLA_DB_NAME']
+    engine = create_engine(app.config['SQLALCHEMY_DATABASE_URI'])
+    conn = engine.connect()
+
+    # construct the query
+    search_term1 = ""
+    search_term2 = ""
+    search_term3 = "AND ("
+
+    for word in term.split(' '):
+        search_term1 += "`records`.`content` LIKE \"%%{0}%%\" AND ".format(word)
+        search_term2 += "`records`.`name` LIKE \"%%{0}%%\" AND ".format(word)
+
+    if current_user.role.name != 'Administrator':
+        domains = User(id=current_user.id).get_domain()
+        if len(domains) == 0:
+            # pdns user does not have access to any zone so the query shouldn't return anything
+            search_term3 += "`domains`.`name`=\"s0meN0nExistingZ0neSoThatTheQueryFails\" OR "
+            search_term3 = search_term3[:-4] + ")" # remove the OR at the end
+        else:
+            for zone in domains:
+                search_term3 += "`domains`.`name`=\"{0}\" OR ".format(str(zone.name))
+
+            search_term3 = search_term3[:-4] + ")" # remove the OR at the end
+    else:
+        search_term3 = ""
+
+    # remove the AND at the end of the search_terms
+    search_term1 = search_term1[:-5]
+    search_term2 = search_term2[:-5]
+
+    query = "SELECT `records`.`name`, `records`.`type`, `records`.`disabled`, `records`.`ttl`, `records`.`content`, \
+            `domains`.`name` AS `zone`, `domains`.`master` AS `master`FROM `{0}`.`records` INNER JOIN `domains` ON \
+            `records`.`domain_id` = `domains`.`id` WHERE ({1} OR {2}) {3} LIMIT 100;".format(db_name, search_term1, search_term2, search_term3)
+
+    if app.config['PS_DEBUG_ENABLED'] and len(app.config['PS_LOG_FILE']) != 0:
+        # log the query for the debugging purposes
+        with open(app.config['PS_LOG_FILE'], "a") as f:
+            f.write("{0} - debug: user: {1} ({2}), query: {3}\n".format(strftime("%Y-%m-%d %H:%M:%S", gmtime()),
+                    str(current_user.id), str(current_user.username), str(query)))
+
+    # exec the query and return the results
+    res = conn.execute(query).fetchall()
+    conn.close()
+    return json.dumps([dict(r) for r in res])
 
 
 @app.route('/', methods=['GET', 'POST'])

@@ -119,3 +119,10 @@ REVERSE_RECORDS_ALLOW_EDIT = ['TXT', 'LOC', 'NS', 'PTR']
 
 # EXPERIMENTAL FEATURES
 PRETTY_IPV6_PTR = False
+
+# POWER SEARCH
+# logs sql queries ot the PS_LOG_FILE for debugging
+PS_DEBUG_ENABLED = True
+# Full path to the file where the invalid search terms and/or sql queries
+# are logged. If empty, logging will be disabled.
+PS_LOG_FILE = ""
